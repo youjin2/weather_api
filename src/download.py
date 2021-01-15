@@ -100,6 +100,10 @@ def main():
 
         weather_data.to_csv(file_name, index=False)
 
+    # save failure log
+    log_data.to_csv(os.path.join(parsed.download_path, 'error_log.csv'),
+                    index=False)
+
 
 if __name__ == '__main__':
     main()
