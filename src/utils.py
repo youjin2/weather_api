@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import pandas as pd
 from datetime import datetime, timedelta
+
+import pandas as pd
 
 from .config import (
     URL,
@@ -16,6 +17,17 @@ _PROJ_PATH = os.path.dirname(__file__)
 
 
 def load_stations(replace_schema=True):
+    """load_stations
+
+    Parameters
+    ----------
+
+    replace_schema : bool
+
+    Returns
+    -------
+    stations : pd.DataFrame
+    """
 
     data_path = os.path.join(_PROJ_PATH, 'metadata', 'stations.csv')
     stations = pd.read_csv(data_path)
@@ -27,6 +39,17 @@ def load_stations(replace_schema=True):
 
 
 def load_error_code(replace_schema=True):
+    """load_error_code
+
+    Parameters
+    ----------
+
+    replace_schema : bool
+
+    Returns
+    -------
+    error_code : pd.DataFrame
+    """
 
     data_path = os.path.join(_PROJ_PATH, 'metadata', 'error_code.csv')
     error_code = pd.read_csv(data_path)
@@ -38,6 +61,18 @@ def load_error_code(replace_schema=True):
 
 
 def get_base_url(service_key_path):
+    """get_base_url
+
+    Parameters
+    ----------
+
+    service_key_path : str
+
+    Returns
+    -------
+    url : str
+        - base url formmated with service key
+    """
 
     with open(service_key_path, 'r') as f:
         service_key = f.read()
@@ -50,6 +85,26 @@ def get_base_url(service_key_path):
 
 
 def create_date_sequence(start_date, end_date, interval):
+    """create_date_sequence
+
+    Parameters
+    ----------
+
+    start_date : str
+        - yyyy-mm-dd
+    end_date : str
+        - yyyy-mm-dd
+    interval : int
+
+    Returns
+    -------
+    date_seq : list
+        - [start_date,
+           start_date + interval*1,
+           start_date + interval*2,
+           ...,
+           end_date]
+    """
 
     # maximum rows per request should be less then 1000
     interval = 40
@@ -71,6 +126,17 @@ def create_date_sequence(start_date, end_date, interval):
 
 
 def update_params(**kwargs):
+    """update_params
+
+    Parameters
+    ----------
+
+    **kwargs : dict
+        - see config.py for available keys
+
+    Returns
+    -------
+    """
 
     params = {k: v for k, v in REQUEST_PARAMS.items()}
     for k, v in kwargs.items():
